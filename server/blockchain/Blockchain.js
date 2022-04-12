@@ -1,23 +1,49 @@
 const Block = require('./Block');
+const Transaction = require('../transaction/Transaction');
 
 class Blockchain {
     constructor() {
+        this.difficulty = 3;
         this.chain = [this._createGenesis()];
-        this.difficulty = 5;
+        this.transactionPool = [];
+        this.reward = 7;
     }
 
     _createGenesis() {
-        return new Block(0, new Date().toUTCString(), '', '0');
+        const genesisBlock = new Block(0, new Date().toUTCString(), '', Array(64 + 1).join('0'));
+        genesisBlock.mine(this.difficulty);
+        return genesisBlock;
     }
 
     getLatestBlock() {
         return this.chain[this.chain.length - 1];
     }
 
-    addBlock(newBlock) {
-        newBlock.previousHash = this.getLatestBlock().hash;
-        newBlock.mine(this.difficulty);
-        this.chain.push(newBlock);
+    mineNewBlock(coinbase) {
+        const block = new Block(this.chain.length, new Date().toUTCString(), this.transactionPool, this.getLatestBlock().hash);
+        block.mine(this.difficulty);
+        this.chain.push(block);
+        this.transactionPool = [new Transaction(null, coinbase, this.reward)];
+    }
+
+    addTransaction(transaction) {
+        if (this.balanceOf(transaction.from) < transaction.amount && transaction.from !== null)
+            throw new Error('Insufficient funds!');
+        else if (transaction.from === transaction.to)
+            throw new Error('Cannot transfer fund between same addresses!');
+        this.transactionPool.push(transaction);
+    }
+
+    balanceOf(address) {
+        let balance = 0;
+        for (const block of this.chain)
+            for (const transaction of block.data) {
+                if (transaction.from === address)
+                    balance -= transaction.amount;
+                else if (transaction.to === address)
+                    balance += transaction.amount;
+            }
+        return balance;
     }
 
     isChainValid() {
@@ -30,14 +56,5 @@ class Blockchain {
         }
     }
 }
-
-// const coin = new Blockchain();
-
-// coin.addBlock(new Block(1, new Date().toUTCString(), ''));
-// coin.addBlock(new Block(2, new Date().toUTCString(), ''));
-// coin.addBlock(new Block(3, new Date().toUTCString(), ''));
-// coin.addBlock(new Block(4, new Date().toUTCString(), ''));
-
-// console.log(coin.isChainValid());
 
 module.exports = Blockchain;
