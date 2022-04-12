@@ -3,7 +3,7 @@ const Transaction = require('../transaction/Transaction');
 
 class Blockchain {
     constructor() {
-        this.difficulty = 3;
+        this.difficulty = 4;
         this.chain = [this._createGenesis()];
         this.transactionPool = [];
         this.reward = 17;
@@ -24,6 +24,7 @@ class Blockchain {
         block.proof(this.difficulty);
         this.chain.push(block);
         this.transactionPool = [new Transaction(null, coinbase, this.reward)];
+        console.log(this.getLatestBlock());
     }
 
     addTransaction(transaction) {
