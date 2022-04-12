@@ -18,8 +18,17 @@ bc.mineNewBlock(accounts[accounts.length - 1].getPublic('hex'));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/next', (req, res) => {
-    nextBlock();
-    res.json(bc.getLatestBlock());
+    res.json(nextBlock());
+});
+
+app.get('/chain', (req, res) => {
+    if (!!req.query.skip && !!req.query.take) {
+        const startIdx = Number(req.query.skip) * Number(req.query.take);
+        const endIdx = startIdx + Number(req.query.take);
+        res.json(bc.chain.slice(startIdx, endIdx));
+    } else {
+        res.json(bc.chain);
+    }
 });
 
 app.listen(8080);
@@ -40,5 +49,5 @@ function nextBlock() {
     }
 
     bc.mineNewBlock(accounts[Math.ceil(Math.random() * accounts.length - 1)].getPublic('hex'));
-
+    return bc.getLatestBlock();
 }
