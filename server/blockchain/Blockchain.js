@@ -6,12 +6,12 @@ class Blockchain {
         this.difficulty = 3;
         this.chain = [this._createGenesis()];
         this.transactionPool = [];
-        this.reward = 7;
+        this.reward = 17;
     }
 
     _createGenesis() {
         const genesisBlock = new Block(0, new Date().toUTCString(), '', Array(64 + 1).join('0'));
-        genesisBlock.mine(this.difficulty);
+        genesisBlock.proof(this.difficulty);
         return genesisBlock;
     }
 
@@ -21,19 +21,31 @@ class Blockchain {
 
     mineNewBlock(coinbase) {
         const block = new Block(this.chain.length, new Date().toUTCString(), this.transactionPool, this.getLatestBlock().hash);
-        block.mine(this.difficulty);
+        block.proof(this.difficulty);
         this.chain.push(block);
         this.transactionPool = [new Transaction(null, coinbase, this.reward)];
     }
 
     addTransaction(transaction) {
+        this.validateTxn(transaction);
+        this.transactionPool.push(transaction);
+    }
+
+    validateTxn(transaction) {
         if (transaction.isValid === false)
             throw new Error('Invalid transaction!');
-        if (this.balanceOf(transaction.from) < transaction.amount && transaction.from !== null)
-            throw new Error('Insufficient funds!');
         else if (transaction.from === transaction.to)
             throw new Error('Cannot transfer funds between same accounts!');
-        this.transactionPool.push(transaction);
+        else if (this.checkCurrentBalance(transaction.from) < transaction.amount && transaction.from !== null)
+            throw new Error('Insufficient funds!');
+    }
+
+    checkCurrentBalance(address) {  // checks for double spending
+        const balance = this.balanceOf(address);
+        for (const txn of this.transactionPool)
+            if (txn.from === address)
+                balance -= txn.amount;
+        return balance;
     }
 
     balanceOf(address) {
