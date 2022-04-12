@@ -1,4 +1,4 @@
-const sha256 = require('crypto-js/sha256');
+const { sha256 } = require('../utils');
 
 class Block {
     constructor(index, timestamp, data, previousHash = '') {
@@ -18,6 +18,13 @@ class Block {
         while (this.calculateHash().slice(0, difficulty) !== Array(difficulty + 1).join('0'))
             this.nonce++;
         this.hash = this.calculateHash();
+    }
+
+    isDataValid() {
+        for (const tx of this.data)
+            if (!tx.isValid())
+                return false;
+        return true;
     }
 }
 

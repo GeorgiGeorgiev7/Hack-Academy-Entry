@@ -27,10 +27,12 @@ class Blockchain {
     }
 
     addTransaction(transaction) {
+        if (transaction.isValid === false)
+            throw new Error('Invalid transaction!');
         if (this.balanceOf(transaction.from) < transaction.amount && transaction.from !== null)
             throw new Error('Insufficient funds!');
         else if (transaction.from === transaction.to)
-            throw new Error('Cannot transfer fund between same addresses!');
+            throw new Error('Cannot transfer funds between same accounts!');
         this.transactionPool.push(transaction);
     }
 
@@ -52,6 +54,7 @@ class Blockchain {
             const previousBlock = this.chain[i - 1];
             if (currentBlock.hash !== currentBlock.calculateHash()) return false;
             if (previousBlock.hash !== currentBlock.previousHash) return false;
+            if (currentBlock.isDataValid === false) return false;
             return true;
         }
     }

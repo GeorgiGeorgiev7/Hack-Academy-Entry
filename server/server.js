@@ -5,18 +5,19 @@ const port = 8080;
 app.listen(port, () =>
     console.log(`>>> Blockchain running on port ${port}`));
 
-const Blockchain = require('./blockchain/Blockchain');
-const Transaction = require('./transaction/Transaction');
+// const Blockchain = require('./blockchain/Blockchain');
+// const Transaction = require('./transaction/Transaction');
+const genAccounts = require('./transaction/accountsGenerator');
 
-const blockchain = new Blockchain();
+const accounts = genAccounts(10);
+let counter = 0;
+for (const account of accounts) {
+    counter++;
+    console.log(Array(50).join('-'));
+    console.log('Акаунт:', counter, '\n');
+    console.log('ПИН код:', account.getPrivate('hex'));
+    console.log('IBAN:', account.getPublic('hex'));
+    console.log(Array(50).join('-'));
+}
 
-blockchain.mineNewBlock('address1');
-blockchain.mineNewBlock('address1');
-
-blockchain.addTransaction(new Transaction('address1', 'address2', 7));
-blockchain.mineNewBlock('the_miner');
-
-blockchain.addTransaction(new Transaction('address2', 'address1', 5));
-blockchain.mineNewBlock('the_miner');
-
-console.log(blockchain.chain);
+// console.log(blockchain.chain);
