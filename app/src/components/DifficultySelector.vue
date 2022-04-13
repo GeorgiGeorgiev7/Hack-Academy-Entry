@@ -15,7 +15,7 @@ export default {
   emits: ["switch"],
   data() {
     return {
-      value: '',
+      value: "",
     };
   },
   watch: {
@@ -35,4 +35,5 @@ select {
   border: 2px solid #9013fe;
   border-radius: 10px;
 }
+
 </style>

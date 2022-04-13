@@ -17,10 +17,6 @@ const routes = [
     path: '/chain',
     component: () => import('../views/ChainPage.vue')
   },
-  {
-    path: '/about',
-    component: () => import('../views/AboutPage.vue')
-  },
 ];
 
 const router = createRouter({

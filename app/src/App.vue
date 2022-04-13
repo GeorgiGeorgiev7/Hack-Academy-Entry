@@ -4,8 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/hash">Hash</router-link> |
       <router-link to="/block">Block</router-link> |
-      <router-link to="/chain">Chain</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/chain">Chain</router-link>
     </nav>
     <router-view class="view" v-slot="{ Component }">
       <transition name="route" mode="out-in">
@@ -71,5 +70,18 @@ nav a.router-link-exact-active {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   margin: auto;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(0, 0, 0);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #9013fe;
+  border-radius: 10px;
 }
 </style>
