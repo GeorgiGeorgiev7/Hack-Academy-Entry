@@ -1,5 +1,5 @@
 <template>
-  <base-card class="block center">
+  <base-card class="block">
     <h2>Block Height: {{ blockHeight }}</h2>
     <hr />
     <div class="stats">

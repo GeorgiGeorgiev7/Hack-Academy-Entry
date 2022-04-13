@@ -6,7 +6,7 @@
       :nonce="nonce"
       :previousHash="previousHash"
       :hash="hash"
-      class="custom-block"
+      class="custom-block center"
       @data="setData"
     >
       <button id="mineBtn" @click="mine">MINE ⛏️</button>
@@ -58,6 +58,7 @@ export default {
             this.previousHash +
             this.data
         ).toString();
+        this.blockHeight++;
         return;
       }
       this.nonce = 0;
@@ -70,6 +71,8 @@ export default {
         this.nonce++;
       }
       this.hash = sha256(this.data + this.nonce).toString();
+      this.blockHeight++;
+      console.log(this.blockHeight);
       this.loading = false;
     },
   },
