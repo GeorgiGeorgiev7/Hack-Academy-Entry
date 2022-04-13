@@ -47,6 +47,7 @@ export default {
       if (this.difficulty === 0) {
         console.log(data.length);
         this.hash = sha256(data).toString();
+        return;
       }
       let nonce = 0;
       this.loading = true;
@@ -57,6 +58,7 @@ export default {
       ) {
         nonce++;
       }
+      console.log(nonce);
       this.hash = sha256(data + nonce).toString();
       this.loading = false;
     },

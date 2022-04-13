@@ -1,6 +1,7 @@
 <template>
   <select v-model="value">
-    <option selected value="0">0</option>
+    <option value="">Difficulty</option>
+    <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -14,7 +15,7 @@ export default {
   emits: ["switch"],
   data() {
     return {
-      value: 0,
+      value: '',
     };
   },
   watch: {
@@ -27,7 +28,8 @@ export default {
 
 <style scoped>
 select {
-  width: 3.5rem;
+  width: 8rem;
+  padding: 0.1rem 0.5rem;
   text-align: center;
   font-size: 1.4rem;
   border: 2px solid #9013fe;
