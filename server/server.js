@@ -15,8 +15,6 @@ for (const account of accounts) {
 }
 bc.mineNewBlock(accounts[accounts.length - 1].getPublic('hex'));
 
-app.use(express.urlencoded({ extended: true }));
-
 app.get('/next', (req, res) => {
     res.json(nextBlock());
 });
@@ -31,7 +29,7 @@ app.get('/chain', (req, res) => {
     }
 });
 
-app.listen(8080);
+app.listen(process.env.PORT);
 
 function nextBlock() {
     for (let i = 0; i < txnsPerBlock; i++) {

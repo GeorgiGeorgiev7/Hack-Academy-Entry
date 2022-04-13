@@ -1,8 +1,8 @@
 <template>
   <div class="latestBlocks center">
-    <custom-block class="latestBlocks-block" />
-    <custom-block class="latestBlocks-block" />
-    <custom-block class="latestBlocks-block" />
+    <custom-block :displayData="false" class="latestBlocks-block" />
+    <custom-block :displayData="false" class="latestBlocks-block" />
+    <custom-block :displayData="false" class="latestBlocks-block" />
   </div>
 </template>
 

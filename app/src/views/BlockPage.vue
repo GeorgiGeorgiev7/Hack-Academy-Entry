@@ -6,6 +6,7 @@
       :nonce="nonce"
       :previousHash="previousHash"
       :hash="hash"
+      :displayData="true"
       class="custom-block center"
       @data="setData"
     >

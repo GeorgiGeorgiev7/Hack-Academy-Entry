@@ -4,9 +4,10 @@
     <hr />
     <div class="stats">
       <div class="stats-stat"><span>Timestamp:</span> {{ timestamp }}</div>
-      <div class="stats-stat"><span>Data:</span></div>
+      <div class="stats-stat" v-if="displayData"><span>Data:</span></div>
       <textarea
-        :value="data ? data : input"
+        v-if="displayData"
+        :value="input"
         @blur="$emit('data', input)"
         name="data"
         id="data"
@@ -30,9 +31,9 @@ export default {
       type: Number,
       required: true,
     },
-    data: {
-      type: Number,
-      required: false,
+    displayData: {
+      type: Boolean,
+      required: true,
     },
     timestamp: {
       type: String,
