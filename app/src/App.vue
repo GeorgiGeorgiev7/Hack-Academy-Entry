@@ -64,4 +64,12 @@ nav a.router-link-exact-active {
 .route-leave-from {
   opacity: 1;
 }
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  margin: auto;
+}
 </style>

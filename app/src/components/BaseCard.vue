@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div id="card">
     <slot />
   </div>
 </template>
 
-<style scoped>
-div {
-    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.5);
+<style>
+#card {
+  box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
 }
 </style>

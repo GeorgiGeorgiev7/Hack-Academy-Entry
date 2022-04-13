@@ -3,9 +3,11 @@ import App from './App.vue';
 import router from './router';
 
 import BaseCard from './components/BaseCard.vue';
+import BaseLoader from './components/BaseLoader.vue';
 
 const app = createApp(App);
 
 app.use(router);
-app.component(BaseCard);
+app.component('base-card', BaseCard);
+app.component('base-loader', BaseLoader);
 app.mount('#app');
