@@ -33,7 +33,7 @@ export default {
     },
     displayData: {
       type: Boolean,
-      required: true,
+      required: false,
     },
     timestamp: {
       type: String,

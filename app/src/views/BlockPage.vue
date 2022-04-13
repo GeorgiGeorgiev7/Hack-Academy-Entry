@@ -49,31 +49,32 @@ export default {
     setData(data) {
       this.data = data;
     },
+    hashData() {
+      return sha256(
+        this.blockHeight +
+          this.timestamp +
+          this.nonce +
+          this.previousHash +
+          this.data
+      ).toString();
+    },
     mine() {
       this.previousHash = this.hash;
       if (this.difficulty === 0) {
-        this.hash = sha256(
-          this.blockHeight +
-            this.timestamp +
-            this.nonce +
-            this.previousHash +
-            this.data
-        ).toString();
+        this.hash = this.hashData();
         this.blockHeight++;
         return;
       }
       this.nonce = 0;
       this.loading = true;
       while (
-        sha256(this.data + this.nonce)
-          .toString()
-          .slice(0, this.difficulty) != Array(this.difficulty + 1).join("0")
+        this.hashData().slice(0, this.difficulty) !=
+        Array(this.difficulty + 1).join("0")
       ) {
         this.nonce++;
       }
-      this.hash = sha256(this.data + this.nonce).toString();
+      this.hash = this.hashData();
       this.blockHeight++;
-      console.log(this.blockHeight);
       this.loading = false;
     },
   },
