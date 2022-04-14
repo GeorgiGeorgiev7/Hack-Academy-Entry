@@ -13,8 +13,9 @@
       />
     </div>
     <base-pagination
-      :currentIndex="skip"
+      :currentIndex="skip + 1"
       :lastIndex="lastPageIndex"
+      @pageChange="handlePageChange"
       class="pagination"
     />
   </div>
@@ -28,14 +29,13 @@ export default {
   data() {
     return {
       take: 3,
-      skip: 1,
+      skip: 0,
       chainLength: "",
       blocks: [],
     };
   },
-  async created() {
-    this.fetchLength();
-    this.fetchBlocks();
+  created() {
+    this.setProps();
   },
   computed: {
     lastPageIndex() {
@@ -43,10 +43,14 @@ export default {
     },
   },
   methods: {
+    setProps() {
+      this.fetchLength();
+      this.fetchBlocks();
+    },
     async fetchBlocks() {
       this.blocks = await (
         await fetch(
-          `http://localhost:8000/chain?take=${this.take}&skip=${this.skip - 1}`
+          `http://localhost:8000/chain?take=${this.take}&skip=${this.skip}`
         )
       ).json();
     },
@@ -55,6 +59,10 @@ export default {
         await (await fetch("http://localhost:8000/chain/length")).json()
       ).length;
       console.log(this.lastPageIndex);
+    },
+    handlePageChange(newPageIdx) {
+      this.skip = newPageIdx - 1;
+      this.setProps();
     },
   },
 };

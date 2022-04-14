@@ -1,20 +1,54 @@
 <template>
   <base-card class="container">
-    <div v-if="currentIndex > 1" id="left" class="control active">&lt;</div>
+    <div
+      v-if="currentIndex > 1"
+      @click="$emit('pageChange', currentIndex - 1)"
+      id="left"
+      class="control active"
+    >
+      &lt;
+    </div>
     <div class="separator">|</div>
-    <div v-if="currentIndex > 2" id="first" class="control">1</div>
-    <div v-if="currentIndex > 1" id="previous" class="control">
+    <div
+      v-if="currentIndex > 2"
+      @click="$emit('pageChange', 1)"
+      id="first"
+      class="control"
+    >
+      1
+    </div>
+    <div
+      v-if="currentIndex > 1"
+      @click="$emit('pageChange', currentIndex - 1)"
+      id="previous"
+      class="control"
+    >
       {{ currentIndex - 1 }}
     </div>
     <div id="current" class="control active">{{ currentIndex }}</div>
-    <div v-if="currentIndex < 1" id="next" class="control">
+    <div
+      v-if="currentIndex < lastIndex"
+      @click="$emit('pageChange', currentIndex + 1)"
+      id="next"
+      class="control"
+    >
       {{ currentIndex + 1 }}
     </div>
-    <div v-if="currentIndex < lastIndex" id="last" class="control">
+    <div
+      v-if="currentIndex < lastIndex - 1"
+      @click="$emit('pageChange', lastIndex)"
+      id="last"
+      class="control"
+    >
       {{ lastIndex }}
     </div>
     <div class="separator">|</div>
-    <div v-if="currentIndex < lastIndex" id="right" class="control active">
+    <div
+      v-if="currentIndex < lastIndex"
+      @click="$emit('pageChange', currentIndex + 1)"
+      id="right"
+      class="control active"
+    >
       &gt;
     </div>
   </base-card>
@@ -24,6 +58,7 @@
 import BaseCard from "./BaseCard.vue";
 export default {
   components: { BaseCard },
+  emits: ["pageChange"],
   props: {
     currentIndex: {
       type: Number,
