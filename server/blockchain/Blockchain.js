@@ -24,7 +24,6 @@ class Blockchain {
         block.proof(this.difficulty);
         this.chain.push(block);
         this.transactionPool = [new Transaction(null, coinbase, this.reward)];
-        console.log(this.getLatestBlock());
     }
 
     addTransaction(transaction) {
