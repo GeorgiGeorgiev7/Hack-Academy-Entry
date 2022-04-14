@@ -50,7 +50,7 @@ export default {
       this.nonce = "thinking...";
       this.hash = "thinking...";
       const { hash, nonce } = await (
-        await fetch("https://hack-academy-block-server.herokuapp.com/hash", {
+        await fetch("http://localhost:8000/hash", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

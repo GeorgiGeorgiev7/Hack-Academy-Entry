@@ -18,7 +18,7 @@ bc.mineNewBlock(accounts[accounts.length - 1].getPublic('hex'));
 
 app.use(express.json());
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://hack-academy-block.web.app/');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Access-Control-Allow-Methods', 'GET POST');
     next();
