@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       take: 3,
-      skip: 0,
+      skip: Number(this.$route.query.page) - 1 || 0,
       chainLength: "",
       blocks: [],
     };
@@ -50,18 +50,22 @@ export default {
     async fetchBlocks() {
       this.blocks = await (
         await fetch(
-          `http://localhost:8000/chain?take=${this.take}&skip=${this.skip}`
+          `https://hack-academy-block-server.herokuapp.com/chain?take=${this.take}&skip=${this.skip}`
         )
       ).json();
     },
     async fetchLength() {
       this.chainLength = (
-        await (await fetch("http://localhost:8000/chain/length")).json()
+        await (
+          await fetch(
+            "https://hack-academy-block-server.herokuapp.com/chain/length"
+          )
+        ).json()
       ).length;
-      console.log(this.lastPageIndex);
     },
     handlePageChange(newPageIdx) {
       this.skip = newPageIdx - 1;
+      this.$router.push(this.$route.path + `?page=${newPageIdx}`);
       this.setProps();
     },
   },
@@ -98,7 +102,9 @@ export default {
 @media only screen and (max-width: 1392px) {
   .latestBlocks {
     flex-direction: column;
-    margin-top: 25rem;
+    position: absolute;
+    top: 5rem;
+    transform: translateX(-50%) translateY(0);
   }
 
   .latestBlocks {

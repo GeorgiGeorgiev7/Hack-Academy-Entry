@@ -83,8 +83,8 @@ export default {
 
 <style scoped>
 .custom-block {
-  height: 33rem;
-  width: 33rem;
+  height: 33rem !important;
+  width: 33rem !important;
 }
 
 #mineBtn {

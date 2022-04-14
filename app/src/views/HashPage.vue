@@ -50,7 +50,7 @@ export default {
       this.nonce = "thinking...";
       this.hash = "thinking...";
       const { hash, nonce } = await (
-        await fetch("http://localhost:8000/hash", {
+        await fetch("https://hack-academy-block-server.herokuapp.com/hash", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,22 +60,6 @@ export default {
       ).json();
       this.nonce = nonce;
       this.hash = hash;
-
-      // if (this.difficulty === 0) {
-      //   this.hash = sha256(data).toString();
-      //   return;
-      // }
-      // let nonce = 0;
-      // this.loading = true;
-      // while (
-      //   sha256(data + nonce)
-      //     .toString()
-      //     .slice(0, this.difficulty) != Array(this.difficulty + 1).join("0")
-      // ) {
-      //   nonce++;
-      // }
-      // this.hash = sha256(data + nonce).toString();
-      // this.loading = false;
     },
   },
 };
