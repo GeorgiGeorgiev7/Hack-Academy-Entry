@@ -10,7 +10,7 @@ class Blockchain {
     }
 
     _createGenesis() {
-        const genesisBlock = new Block(0, new Date().toUTCString(), '', Array(64 + 1).join('0'));
+        const genesisBlock = new Block(0, new Date().toUTCString(), 'Genesis Block', Array(64 + 1).join('0'));
         genesisBlock.proof(this.difficulty);
         return genesisBlock;
     }

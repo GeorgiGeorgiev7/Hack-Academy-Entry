@@ -2,31 +2,21 @@
   <div>
     <div class="latestBlocks center">
       <custom-block
-        :blockHeight="1"
-        :timestamp="new Date().toUTCString()"
-        :nonce="56161"
-        :previousHash="'002a0fsd20gs3fv'"
-        :hash="'lifd3516035fd'"
-        class="latestBlocks-block"
-      />
-      <custom-block
-        :blockHeight="2"
-        :timestamp="new Date().toUTCString()"
-        :nonce="2315"
-        :previousHash="'002a0fsd20gs3fv'"
-        :hash="'lifd3516035fd'"
-        class="latestBlocks-block"
-      />
-      <custom-block
-        :blockHeight="3"
-        :timestamp="new Date().toUTCString()"
-        :nonce="98409"
-        :previousHash="'002a0fsd20gs3fv'"
-        :hash="'lifd3516035fd'"
+        v-for="block in blocks"
+        :key="block.hash"
+        :blockHeight="block.index"
+        :timestamp="block.timestamp"
+        :nonce="block.nonce"
+        :previousHash="'0x' + block.previousHash"
+        :hash="'0x' + block.hash"
         class="latestBlocks-block"
       />
     </div>
-    <base-pagination :currentIndex="7" :lastIndex="42" class="pagination" />
+    <base-pagination
+      :currentIndex="skip"
+      :lastIndex="lastPageIndex"
+      class="pagination"
+    />
   </div>
 </template>
 
@@ -35,6 +25,38 @@ import CustomBlock from "../components/CustomBlock.vue";
 
 export default {
   components: { CustomBlock },
+  data() {
+    return {
+      take: 3,
+      skip: 1,
+      chainLength: "",
+      blocks: [],
+    };
+  },
+  async created() {
+    this.fetchLength();
+    this.fetchBlocks();
+  },
+  computed: {
+    lastPageIndex() {
+      return Math.ceil(this.chainLength / this.take);
+    },
+  },
+  methods: {
+    async fetchBlocks() {
+      this.blocks = await (
+        await fetch(
+          `http://localhost:8000/chain?take=${this.take}&skip=${this.skip - 1}`
+        )
+      ).json();
+    },
+    async fetchLength() {
+      this.chainLength = (
+        await (await fetch("http://localhost:8000/chain/length")).json()
+      ).length;
+      console.log(this.lastPageIndex);
+    },
+  },
 };
 </script>
 
@@ -54,13 +76,6 @@ export default {
   margin: 2rem;
 }
 
-.latestBlocks-block:first-child,
-.latestBlocks-block:last-child {
-  width: 22rem;
-  height: 22rem;
-  margin: 2rem;
-}
-
 .pagination {
   position: fixed;
   bottom: 0;
@@ -75,18 +90,11 @@ export default {
 @media only screen and (max-width: 1392px) {
   .latestBlocks {
     flex-direction: column;
-    margin-top: 30rem;
+    margin-top: 25rem;
   }
 
   .latestBlocks {
     padding-bottom: 5rem;
-  }
-
-  .latestBlocks-block:first-child,
-  .latestBlocks-block:last-child {
-    width: 25rem;
-    height: 25rem;
-    margin: 2rem;
   }
 
   .pagination {

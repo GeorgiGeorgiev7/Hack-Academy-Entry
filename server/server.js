@@ -11,10 +11,10 @@ const accounts = genAccounts(7);
 const txnsPerBlock = 4;
 
 // mining initial empty blocks so everyone has some money
-// for (const account of accounts) {
-//     bc.mineNewBlock(account.getPublic('hex'));
-// }
-// bc.mineNewBlock(accounts[accounts.length - 1].getPublic('hex'));
+for (const account of accounts) {
+    bc.mineNewBlock(account.getPublic('hex'));
+}
+bc.mineNewBlock(accounts[accounts.length - 1].getPublic('hex'));
 
 app.use(express.json());
 app.use((req, res, next) => {
