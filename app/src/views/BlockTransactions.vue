@@ -1,8 +1,9 @@
 <template>
-  <base-card class="container center">
+  <base-card v-if="transactions.length > 0" class="container center">
     <base-card v-for="txn in transactions" :key="txn.hash" class="txn">
       <div class="txn-data">
-        From: <span
+        From:
+        <span
           >{{
             txn.from === null || txn.from === undefined
               ? "0x0000000000000000000000000000000000000000".slice(0, 9)
@@ -17,6 +18,11 @@
         Amount: <span>{{ String(txn.amount).slice(0, 4) }} ETH</span>
       </div>
     </base-card>
+  </base-card>
+  <base-card v-else class="container center">
+    <base-card class="empty">
+      There are no transactions in the first 2 blocks.</base-card
+    >
   </base-card>
 </template>
 
@@ -52,7 +58,7 @@ export default {
     this.transactions = (
       await (
         await fetch(
-          `http://localhost:8000/block/${this.$route.params.id}/transactions`
+          `https://hack-academy-block-server.herokuapp.com/block/${this.$route.params.id}/transactions`
         )
       ).json()
     ).transactions;
@@ -73,7 +79,8 @@ export default {
   overflow: hidden;
 }
 
-.txn {
+.txn,
+.empty {
   color: #9013fe;
   font-weight: 600;
   font-size: 1.2rem;
@@ -84,6 +91,12 @@ export default {
   display: flex;
   align-items: center;
   overflow: hidden;
+}
+
+.empty {
+  font-size: 2rem;
+  height: 8rem;
+  justify-content: center;
 }
 
 span {
@@ -97,7 +110,7 @@ span {
   align-items: center;
   text-align: center;
   justify-content: flex-start;
-  height: calc(24rem / 6);
+  height: calc(24rem / 8);
   padding-left: 1rem;
   width: calc(36rem / 3);
   overflow: hidden;

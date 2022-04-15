@@ -58,13 +58,13 @@ export default {
     async fetchBlocks() {
       this.blocks = await (
         await fetch(
-          `http://localhost:8000/chain?take=${this.take}&skip=${this.skip}`
+          `https://hack-academy-block-server.herokuapp.com/chain?take=${this.take}&skip=${this.skip}`
         )
       ).json();
     },
     async fetchLength() {
       this.chainLength = (
-        await (await fetch("http://localhost:8000/chain/length")).json()
+        await (await fetch("https://hack-academy-block-server.herokuapp.com/chain/length")).json()
       ).length;
     },
     handlePageChange(newPageIdx) {
@@ -74,7 +74,7 @@ export default {
     },
     async mine() {
       this.loading = true;
-      await (await fetch(`http://localhost:8000/next`)).json();
+      await (await fetch(`https://hack-academy-block-server.herokuapp.com/next`)).json();
       this.setProps();
       this.loading = false;
     },
