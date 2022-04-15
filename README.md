@@ -24,24 +24,17 @@ that people can experiment with and learn how it works with the help of a friend
 ## Block
 ### "Block" is a project that aims to teach people the very basics about the blockchain technology and how it works
 #### It has both front-end and back-end code and users can visit a total of _**3**_ pages:
-1. **A page which shows a blockchain run by a single node with the following characteristics:**
- * runs to infinity (or until the server goes off)
+1. **A hash page** where users:
+ * can test and learning how hashing works with sha256 cryptographic algorithm
+2. **A page which shows a single block where:**
+ * user can experiment and learn what fields does a single block include
+ * mines the block as user clicks a "Mine ⛏️" button and saves current and previous block hash
+3. **A page which shows a blockchain that mines dummy transactions on user click:**
  * each block contains 5 fields:
    * timestamp
    * data
    * current hash
    * previous hash
    * nonce
- * adds a new block to the chain approximately each 10 seconds
- > _Read more about each of the block fields at < leave_a_link_later >_
-2. **A page which shows a blockchain that:**
- * mines its genesis block when the user initially enters the page (or reloads)
- * mines all the other blocks one by one as user clicks a "Mine ⛏️" button\
-\
-_The difference between this blockchain and the first one is that\
-here the user has all the freedom to write whatever they want in the data field\
-and then mine their custom built block by theselves at any time._
-3. **A "How It Works" page** where users can read about how the previous two pages actually work and\
-understand what is the difference between them (the simple) blockchains and a real one.
 <br>
-Visit the app at < leave_a_link_later >
+Visit the app at https://hack-academy-block.web.app/
