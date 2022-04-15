@@ -24,12 +24,27 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/chain', (req, res) => {
+    if (!!req.query.skip && !!req.query.take) {
+        const startIdx = Number(req.query.skip) * Number(req.query.take);
+        const endIdx = startIdx + Number(req.query.take);
+        res.json(bc.chain.slice(startIdx, endIdx));
+    } else {
+        res.json(bc.chain);
+    }
+});
+
 app.get('/chain/length', (req, res) => {
     res.json({ length: bc.chain.length });
 });
 
 app.get('/next', (req, res) => {
     res.json(nextBlock());
+});
+
+app.get('/block/:id/transactions', (req, res) => {
+    const block = bc.getBlockByHash(req.params.id);
+    res.json({ transactions: block?.data });
 });
 
 app.post('/hash', (req, res) => {
@@ -43,16 +58,6 @@ app.post('/hash', (req, res) => {
             hash = sha256(req.body.data + ++nonce).toString();
     }
     res.json({ hash, nonce });
-});
-
-app.get('/chain', (req, res) => {
-    if (!!req.query.skip && !!req.query.take) {
-        const startIdx = Number(req.query.skip) * Number(req.query.take);
-        const endIdx = startIdx + Number(req.query.take);
-        res.json(bc.chain.slice(startIdx, endIdx));
-    } else {
-        res.json(bc.chain);
-    }
 });
 
 const port = process.env.PORT || 8000;

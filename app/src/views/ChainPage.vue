@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="latestBlocks center">
+    <div class="blocks center">
       <custom-block
         v-for="block in blocks"
         :key="block.hash"
@@ -9,7 +9,8 @@
         :nonce="block.nonce"
         :previousHash="'0x' + block.previousHash"
         :hash="'0x' + block.hash"
-        class="latestBlocks-block"
+        @click="goToTxns(block.hash)"
+        class="blocks-block"
       />
     </div>
     <base-pagination
@@ -77,12 +78,15 @@ export default {
       this.setProps();
       this.loading = false;
     },
+    goToTxns(id) {
+      this.$router.push(`/block/${id}/transactions`);
+    },
   },
 };
 </script>
 
 <style scoped>
-.latestBlocks {
+.blocks {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -90,11 +94,18 @@ export default {
   flex-wrap: wrap;
 }
 
-.latestBlocks-block {
+.blocks-block {
   font-size: 0.9rem;
   width: 25rem;
   height: 25rem;
   margin: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.blocks-block:hover {
+  width: 26.5rem;
+  height: 26.5rem;
 }
 
 .pagination {
@@ -133,15 +144,12 @@ export default {
 }
 
 @media only screen and (max-width: 1392px) {
-  .latestBlocks {
+  .blocks {
     flex-direction: column;
     position: absolute;
     top: 5rem;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  .latestBlocks {
     padding-bottom: 5rem;
+    transform: translateX(-50%) translateY(0);
   }
 
   .pagination {

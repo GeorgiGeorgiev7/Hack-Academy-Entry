@@ -19,6 +19,15 @@ class Blockchain {
         return this.chain[this.chain.length - 1];
     }
 
+    getBlockByHash(hash) {
+        for (const block of this.chain) {
+            if (block.hash === hash) {
+                return block;
+            }
+        }
+        return undefined;
+    }
+
     mineNewBlock(coinbase) {
         const block = new Block(this.chain.length, new Date().toUTCString(), this.transactionPool, this.getLatestBlock().hash);
         block.proof(this.difficulty);

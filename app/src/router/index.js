@@ -17,6 +17,10 @@ const routes = [
     path: '/chain',
     component: () => import('../views/ChainPage.vue')
   },
+  {
+    path: '/block/:id/transactions',
+    component: () => import('../views/BlockTransactions.vue')
+  },
 ];
 
 const router = createRouter({
