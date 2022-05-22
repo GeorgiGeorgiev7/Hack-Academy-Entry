@@ -1,6 +1,8 @@
 # Hack Academy
 ## Entry Task Solution
 
+### https://hack-academy-block.web.app/
+
 ```js
 const { createHash } = require('crypto')
 
@@ -36,5 +38,3 @@ that people can experiment with and learn how it works with the help of a friend
    * current hash
    * previous hash
    * nonce
-<br>
-Visit the app at https://hack-academy-block.web.app/
